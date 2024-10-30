@@ -36,16 +36,29 @@ void subscription_callback(const void * msgin)
   const std_msgs__msg__Int32 * msg = (const std_msgs__msg__Int32 *)msgin;
   int x = msg->data >> 16;
   int y = msg->data & 0xFFF;
+  /*
   Serial.print("(");
   Serial.print(x);
   Serial.print(",");
   Serial.print(y);
   Serial.println(")");
+  */
+  uint8_t data[4] = {};
+  data[0] = x >> 8;
+  data[1] = x & 0xff;
+  data[2] = y >> 8;
+  data[3] = y & 0xff;
+  Serial2.printf("%c", 0xff);
+  for (int i = 0; i < 8; i++) {
+    Serial2.printf("%c", data[i]);
+  }
+
 }
 
 void setup() {
   set_microros_wifi_transports("yasuna-password", "t-semi_yasuna", "192.168.0.25", 8888);
   Serial.begin(9600);
+  Serial2.begin(9600, SERIAL_8N1, 16,17);
   delay(2000);
 
   allocator = rcl_get_default_allocator();
