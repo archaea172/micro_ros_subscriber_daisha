@@ -36,13 +36,13 @@ void subscription_callback(const void * msgin)
   const std_msgs__msg__Int32 * msg = (const std_msgs__msg__Int32 *)msgin;
   int x = msg->data >> 16;
   int y = msg->data & 0xFFF;
-  /*
+  
   Serial.print("(");
   Serial.print(x);
   Serial.print(",");
   Serial.print(y);
   Serial.println(")");
-  */
+  /*
   uint8_t data[4] = {};
   data[0] = x >> 8;
   data[1] = x & 0xff;
@@ -50,8 +50,9 @@ void subscription_callback(const void * msgin)
   data[3] = y & 0xff;
   Serial2.printf("%c", 0xff);
   for (int i = 0; i < 8; i++) {
+    Serial.printf("%d\r\n", data[i]);
     Serial2.printf("%c", data[i]);
-  }
+  }*/
 
 }
 
